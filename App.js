@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
-import { Button, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Button, FlatList, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import TaskItem from './Components/TaskItem';
 
 export default function App() {
 
@@ -14,7 +15,9 @@ export default function App() {
 
   const addNewTask = () => {
     setTaskList((currentTaskList) =>
-      [...currentTaskList, task]
+      [...currentTaskList,
+      { text: task, id: Math.random().toString() }
+      ]
 
     )
   }
@@ -33,7 +36,20 @@ export default function App() {
 
       <View style={styles.taskListSection}>
         <Text style={styles.taskOverviewStyle}>Your Task!</Text>
-        <ScrollView>
+       {/* for performance issue we use FlaList in place of Scroll view because when we have lots of task then it takes lot of time to load and in flat list as we scroll it laods untill that this is also example of lazy loading*/}
+        <FlatList
+          data={taskList}
+          renderItem={({ item, index }) => {
+            return <TaskItem item={item}  index={index} />
+              
+            
+          }}
+          keyExtractor={(index, item) => {
+            return item.id;
+          }}
+
+        />
+        {/* <ScrollView>
         {
           taskList.map((taskItem, index) => {
             return (
@@ -45,8 +61,8 @@ export default function App() {
             )
           })
         }
-        </ScrollView>
-
+        </ScrollView> */
+        }
       </View>
 
     </View>
@@ -88,15 +104,5 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
 
   },
-  taskItemStyle: {
-    margin: 6,
-    padding: 10,
-    borderRadius: 10,
-    backgroundColor: 'blue',
-    color: '#ffffff'
-
-  },
-  taskItemTextStyle: {
-    color: '#ffffff',
-  }
+  
 });
