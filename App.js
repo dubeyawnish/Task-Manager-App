@@ -21,6 +21,11 @@ export default function App() {
 
     )
   }
+  const deleteTask=(id)=>{
+    setTaskList((currentTaskList)=>{
+      return currentTaskList.filter((task)=>task.id!==id)
+    })
+  }
 
 
   return (
@@ -28,12 +33,13 @@ export default function App() {
       <AddTask addNewTask={addNewTask} />
 
       <View style={styles.taskListSection}>
-        <Text style={styles.taskOverviewStyle}>Your Task!</Text>
+        {taskList.length>0? <Text style={styles.taskOverviewStyle}>Your Task!</Text>:<Text></Text>}
+       
         {/* for performance issue we use FlaList in place of Scroll view because when we have lots of task then it takes lot of time to load and in flat list as we scroll it laods untill that this is also example of lazy loading*/}
         <FlatList
           data={taskList}
           renderItem={({ item, index }) => {
-            return <TaskItem item={item} index={index} />
+            return <TaskItem item={item} index={index} onDeleteTask={deleteTask}  />
 
 
           }}

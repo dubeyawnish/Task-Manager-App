@@ -9,6 +9,7 @@ const AddTask = (props) => {
     }
     const addTask = () => {
         props.addNewTask(task)//data is sending form child component to parent component with the help of callback function
+        //setTask('');
     }
 
 
