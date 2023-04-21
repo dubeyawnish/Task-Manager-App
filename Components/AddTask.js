@@ -1,4 +1,4 @@
-import { StyleSheet, Button, TextInput, View, Alert, Modal } from "react-native";
+import { StyleSheet, Button, TextInput, View, Alert, Modal, Image } from "react-native";
 import { useState } from "react";
 
 const AddTask = (props) => {
@@ -24,6 +24,7 @@ const AddTask = (props) => {
     return (
         <Modal visible={props.visible} animationType="slide">
             <View style={styles.inputContainer}>
+                <Image style={styles.imageStyle} source={require('../assets/icon.png')} />
                 <TextInput
                     onChangeText={taskInputHandler}
                     style={styles.inputBox}
@@ -53,10 +54,8 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        marginBottom: 20,
-        borderBottomWidth: 1,
-        borderBottomColor: '#cccccc',
         padding: 15,
+        backgroundColor: '#a7abab'
 
     },
     inputBox: {
@@ -64,6 +63,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#cccccc',
         padding: 5,
+        backgroundColor: 'white',
 
         borderRadius: 15
     },
@@ -76,6 +76,11 @@ const styles = StyleSheet.create({
         width: '35%',
         marginHorizontal: 10
 
+    },
+    imageStyle: {
+        width: 100,
+        height: 100,
+        margin: 20,
     }
 }
 
