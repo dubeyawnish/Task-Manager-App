@@ -4,21 +4,24 @@ import { StyleSheet, View, Text, Pressable } from "react-native";
 
 const TaskItem = (props) => {
 
-    //  const  deleteTask=()=>{                this will do same work as bind function send data from child component to parent components
+    //  const  deleteTask=()=>{           // we cannot send directly id from onpress={props.onDeleteTask(props.item.id)} if wedo this then get error for this we have to make function and pass form that     
+    //  this will do same work as bind function send data from child component to parent components
     //     props.onDeleteTask(props.item.id);
     //  }
 
 
     return (
-         <Pressable onPress={props.onDeleteTask.bind(this,props.item.id)}>
-        {/*  <Pressable onPress={deleteTask}> */}
-         
-            <View style={styles.taskItemStyle}>
+
+
+        <View style={styles.taskItemStyle}>
+            <Pressable android_ripple={{ color: '#000000' }} onPress={props.onDeleteTask.bind(this, props.item.id)}>
+                {/*  <Pressable onPress={deleteTask}> */}
                 <Text style={styles.taskItemTextStyle} > {props.index + 1}: {props.item.text}</Text>
                 <Text style={styles.taskItemTextStyle} >  {props.item.id}</Text>
-            </View>
+            </Pressable>
+        </View>
 
-        </Pressable>
+
 
     )
 
@@ -29,13 +32,14 @@ export default TaskItem;
 const styles = StyleSheet.create({
     taskItemStyle: {
         margin: 6,
-        padding: 10,
+
         borderRadius: 10,
         backgroundColor: 'blue',
         color: '#ffffff'
 
     },
     taskItemTextStyle: {
+        padding: 10,
         color: '#ffffff',
     }
 });

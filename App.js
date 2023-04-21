@@ -1,15 +1,22 @@
 import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
-import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { Button, FlatList, StyleSheet, Text, View } from 'react-native';
 import TaskItem from './Components/TaskItem';
 import AddTask from './Components/AddTask';
 
 export default function App() {
 
-
+  const [showModal, setShowModal] = useState(false);
   const [taskList, setTaskList] = useState([]);
 
+  const showModalHandler = () => {
+    setShowModal(true);
+  }
 
+  const hideModalHandler = () => {
+    setShowModal(false);
+
+  }
 
 
 
@@ -20,26 +27,28 @@ export default function App() {
       ]
 
     )
+    setShowModal(false);
   }
-  const deleteTask=(id)=>{
-    setTaskList((currentTaskList)=>{
-      return currentTaskList.filter((task)=>task.id!==id)
+  const deleteTask = (id) => {
+    setTaskList((currentTaskList) => {
+      return currentTaskList.filter((task) => task.id !== id)
     })
   }
 
 
   return (
     <View style={styles.mainContainer} >
-      <AddTask addNewTask={addNewTask} />
+      <Button title='Add New Task' onPress={showModalHandler} />
+      {<AddTask addNewTask={addNewTask} visible={showModal} hideModal={hideModalHandler} />}
 
       <View style={styles.taskListSection}>
-        {taskList.length>0? <Text style={styles.taskOverviewStyle}>Your Task!</Text>:<Text></Text>}
-       
+        {taskList.length > 0 ? <Text style={styles.taskOverviewStyle}>Your Task!</Text> : <Text></Text>}
+
         {/* for performance issue we use FlaList in place of Scroll view because when we have lots of task then it takes lot of time to load and in flat list as we scroll it laods untill that this is also example of lazy loading*/}
         <FlatList
           data={taskList}
           renderItem={({ item, index }) => {
-            return <TaskItem item={item} index={index} onDeleteTask={deleteTask}  />
+            return <TaskItem item={item} index={index} onDeleteTask={deleteTask} />
 
 
           }}
