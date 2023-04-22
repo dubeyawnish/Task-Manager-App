@@ -1,0 +1,2 @@
+1.  npm install --global expo-cli eas-cli 
+2.  eas build -p android --profile preview
